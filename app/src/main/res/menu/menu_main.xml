@@ -1,0 +1,29 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="abbesolo.com.maru.ui.meeting_list.ListMeetingActivity">
+
+    <item
+    android:id="@+id/action_websearch"
+    android:icon="@drawable/ic_filtre_name"
+    android:orderInCategory="2"
+    android:title="Info"
+    app:showAsAction="ifRoom">
+
+    <menu>
+
+    <item
+        android:id="@+id/meeting_filtre"
+        android:title="Filtre par Date"/>
+
+    <item
+        android:id="@+id/filtre_by_place"
+        android:title="Filtre par Salle" />
+
+    </menu>
+</item>
+
+
+
+
+</menu>
