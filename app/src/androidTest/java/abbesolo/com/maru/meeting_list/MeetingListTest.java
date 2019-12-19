@@ -1,12 +1,7 @@
 package abbesolo.com.maru.meeting_list;
 
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.TextView;
 
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -17,14 +12,17 @@ import abbesolo.com.maru.R;
 import abbesolo.com.maru.ui.meeting_list.ListMeetingActivity;
 import abbesolo.com.maru.utils.DeleteViewAction;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
+import static abbesolo.com.maru.R.id.textView;
 import static abbesolo.com.maru.utils.RecyclerViewItemCountAssertion.withItemCount;
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
@@ -32,7 +30,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static java.util.EnumSet.allOf;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.AllOf.allOf;
 import static org.hamcrest.core.IsNull.notNullValue;
 
 
@@ -49,6 +49,9 @@ public class MeetingListTest {
     private String[] salles = {"Salle 1 - 8-12-2019 9:30 - New App", "Salle 2 - 10-12-2019 10:30 - zo App", "Salle 7 - 11-12-2019 12:28 - New App"};
 
     private ListMeetingActivity mActivity;
+
+
+    public static final String SALLE = "Salle I";
 
     @Rule
     public ActivityTestRule<ListMeetingActivity> mActivityRule =
@@ -109,71 +112,88 @@ public class MeetingListTest {
     }
 
     @Test
-    public TypeSafeMatcher<View> myMeetingList_shouldDisplay_myCreatedMeeting()
+    public void myMeetingList_shouldDisplay_myCreatedMeeting()
         {
-       //  When : we click on the fab button
-           onView(ViewMatchers.withId(R.id.ajout)).perform(click());
+            // When : check if meetinglist isDisplayed
+            onView(withId(R.id.rec)).check(matches(isDisplayed()));
+            // Given :
+            onView(withId(R.id.rec)).check(withItemCount(ITEMS_COUNT));
+            //  When : we click on the fab button
+           onView(withId(R.id.ajout)).perform(click());
+            // Then : Go to the Add meeting in FormActivity
+            onView(withId(R.id.form)).check(matches(isDisplayed()));
+
+            //Enter meeting Topic
+            onView(withId(R.id.meeting_topic)).perform(replaceText("New App"));
+//
+////            // Click on the spinner
+//            onView(withId(R.id.spinner)).perform(click());
+//            onData(allOf(is(instanceOf(String.class)), is("Salle"))).perform(click());
+//            onView(withId(textView))
+//                    .check(matches(withText(containsString("Salle"))));
 
 
-            ViewInteraction edittext1 = onView(allOf(withId(R.id.meeting_topic), withText("New App"),
-                            childAtPosition(childAtPosition(withId(R.id.rec), 0), 0), isDisplayed()));
-            edittext1.check(matches(withText("New App")));
 
+            // Click on the Spinner
+            onView(withId(R.id.spinner)).perform(click());
 
-            //Create a ViewInteraction to click on the spinner
-            ViewInteraction appCompatSpinner = onView(allOf(withId(R.id.meeting_room),
-                    childAtPosition(allOf(withId(R.id.spinner),
-                            childAtPosition(withId(android.R.id.custom), 0)), 0),
-                    isDisplayed()));
-            appCompatSpinner.perform(click());
+            // Select a ROOM from the list
+            onData(allOf(is(instanceOf(String.class)), is(SALLE))).perform(click());
 
-
-
-            ViewInteraction edittext2 = onView(
-                    allOf(withId(R.id.member), withText("romulus@yahoo.fr, romulus@yahoo.fr,romulus@yahoo.fr"),
-                            childAtPosition(childAtPosition(withId(R.id.rec), 0), 0), isDisplayed()));
-            edittext2.check(matches(withText("romulus@yahoo.fr,romulus@yahoo.fr,romulus@yahoo.fr")));
-
-
-            ViewInteraction timeButton = onView(allOf(withId(R.id.btn_time), withText("12H30"),
-                            childAtPosition(childAtPosition(withId(R.id.rec), 0), 0),
-                            isDisplayed()));
-            timeButton.check(matches(withText("12H30")));
-
-            ViewInteraction dateButton = onView(allOf(withId(R.id.btn_date), withText("9:30"),
-                    childAtPosition(childAtPosition(withId(R.id.rec), 0), 0),
-                            isDisplayed()));
-            dateButton.check(matches(withText("8-12-2019")));
-
-
-            onView(ViewMatchers.withId(R.id.envoie)).perform(click());
-
-
-            // Then : the number of element is 2
-            onView(withId(R.id.rec)).check(withItemCount(ITEMS_COUNT=1));
+            // Check that the Room label is updated with selected room
+            onView(withId(textView)).check(matches(withText(SALLE)));
 
 
 
 
-           private static Matcher<View> childAtPosition(final Matcher<View> parentMatcher, final int position) {
+////            ViewInteraction customTextView = onView
+////                    allOf(withId(R.id.textView), withText("Salle I"), isDisplayed()));
+////            customTextView.perform(click());
+//
+//            //Create a ViewInteraction to click on the spinner
+//            ViewInteraction appCompatSpinner = onView(allOf(withId(R.id.spinner),
+//                    childAtPosition(allOf(withId(R.id.textView),
+//                            childAtPosition(withId(android.R.id.), 0)), 0),
+//                    isDisplayed()));
+//            appCompatSpinner.perform(click());
+//            onData(anything()).inRoot(RootMatchers.isPlatformPopup()).atPosition(2).perform(click());
+//
+//
+//
+//            onView(withId(R.id.spinner)).perform(replaceText (SALLE));
+//            onData(anything()).atPosition(1).perform(click());
+//            onView(withId(R.id.spinner)).check(matches(withSpinnerText(containsString("Salle I"))));
+//
 
-         return new TypeSafeMatcher<View>() {
-                @Override
-               public void describeTo(org.hamcrest.Description description) {
-                    description.appendText ("Child at position" + position + "in parent");
-                    parentMatcher.describeTo (description);
-                }
+            //Enter meeting members
+            onView(withId(R.id.member)).perform(replaceText("romulus@yahoo.fr, romulus@yahoo.fr,romulus@yahoo.fr"));
+
+            //Enter meeting date
+   //         onView(withId(R.id.btn_date)).perform(replaceText("8-12-2019"));
+
+            onView(withId(R.id.btn_date)).perform(PickerActions.setDate(2017, 6, 30));
+
+//            onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(2020, 10, 22));
+//            onView(withId(R.id.btn_date)).perform(click());
+//
+//            //Enter meeting time
+//     //       onView(withId(R.id.btn_time)).perform(replaceText("9:30"));
+//            onView(isAssignableFrom(TimePicker.class)).perform(PickerActions.setTime (9,  22));
+
+            onView(withId(R.id.btn_time)).perform(PickerActions.setTime (7, 30));
 
 
 
-                @Override
-                public boolean matchesSafely(View view) {
-                    ViewParent parent = view.getParent();
-                    return parent instanceof ViewGroup && parentMatcher.matches(parent)
-                            && view.equals(((ViewGroup) parent).getChildAt(position));
-                }
-            };
-        }
+
+
+            onView(withId(R.id.envoie)).perform(click());
+
+            onView(withId(R.id.rec)).check(matches(isDisplayed()));
+
+
+            // Then : the number of element is
+            onView(withId(R.id.rec)).check(withItemCount(ITEMS_COUNT +1));
+
 
 
         }
@@ -247,7 +267,7 @@ public class MeetingListTest {
 //        // Then : The list has all the reunions
 //        onView(ViewMatchers.withId(R.id.fragment_list_reunions)).check(withItemCount(ITEMS_COUNT));
 
-    }
+
 
 
 }
