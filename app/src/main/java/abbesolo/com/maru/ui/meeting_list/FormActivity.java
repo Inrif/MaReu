@@ -120,6 +120,7 @@ public class FormActivity extends AppCompatActivity implements
             resultIntent.putExtra ("MeetingRoomPicture", selectedRoomPicture);
             resultIntent.putExtra ("MeetingMember", meeting_members.getText ().toString ());
             resultIntent.putExtra ("MeetingTime", txtDate.getText () + " " + txtTime.getText ());
+            resultIntent.putExtra ("MeetingDate", txtDate.getText ());
 
             setResult (Activity.RESULT_OK, resultIntent);
             finish ();

@@ -12,20 +12,22 @@ import abbesolo.com.maru.R;
 
 public class CustomAdapter extends BaseAdapter {
     Context context;
-    int flags[];
-    String[] countryNames;
+    int mRes[];
+    String[] mRoomName;
     LayoutInflater inflter;
 
-    public CustomAdapter(Context applicationContext, int[] flags, String[] countryNames) {
+
+
+    public CustomAdapter(Context applicationContext, int[] mRes, String[] mRoomName) {
         this.context = applicationContext;
-        this.flags = flags;
-        this.countryNames = countryNames;
+        this.mRes = mRes;
+        this.mRoomName = mRoomName;
         inflter = ( LayoutInflater.from (applicationContext) );
     }
 
     @Override
     public int getCount() {
-        return flags.length;
+        return mRes.length;
     }
 
     @Override
@@ -43,8 +45,8 @@ public class CustomAdapter extends BaseAdapter {
         view = inflter.inflate (R.layout.custom_spinner_items, null);
         ImageView icon = (ImageView) view.findViewById (R.id.imageView);
         TextView names = (TextView) view.findViewById (R.id.textView);
-        icon.setImageResource (flags[i]);
-        names.setText (countryNames[i]);
+        icon.setImageResource (mRes[i]);
+        names.setText (mRoomName[i]);
         return view;
     }
 }

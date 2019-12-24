@@ -1,5 +1,6 @@
 package abbesolo.com.maru.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import abbesolo.com.maru.model.Meeting;
@@ -25,6 +26,14 @@ public interface MeetingApiService {
         void deleteMeeting(Meeting meeting);
 
         List<Meeting> getFiltredMeetings( int filter);
+
+        public ArrayList<Meeting> filterDate(String date);
+
+        public ArrayList<Meeting> filterRoom(String room);
+        ArrayList<Meeting> filter(String text);
+
+
+
 
 
     }
