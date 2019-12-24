@@ -15,25 +15,34 @@ import org.junit.runners.MethodSorters;
 import abbesolo.com.maru.R;
 import abbesolo.com.maru.ui.meeting_list.ListMeetingActivity;
 import abbesolo.com.maru.utils.DeleteViewAction;
+import abbesolo.com.maru.utils.RecyclerViewItemCountAssertion;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.contrib.PickerActions;
+import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
 import static abbesolo.com.maru.R.id.textView;
 import static abbesolo.com.maru.utils.RecyclerViewItemCountAssertion.withItemCount;
+import static abbesolo.com.maru.utils.ToolbarMatcher.childAtPosition;
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.anything;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.hamcrest.core.IsNull.notNullValue;
 
@@ -133,6 +142,82 @@ public class MeetingListTest {
     }
 
 
+
+    /**
+     * check if the filter function in the menu filtered well and return good list
+     */
+    @Test
+    public void reunionList_clickOnFilter_thenAttentFilterList(){
+        onView(withId(R.id.rec)).check(matches(isDisplayed()));
+
+        //Create a ViewInteraction to click on the toolbar hamburger
+        ViewInteraction actionMenuItemView = onView(Matchers.allOf(withContentDescription("Info"),
+                childAtPosition(childAtPosition(withId(R.id.toolbar), 1), 0),
+                isDisplayed()));
+
+        actionMenuItemView.perform(click());
+        // Create a ViewInteraction to click on the item menu
+        ViewInteraction appCompatTextView = onView(Matchers.allOf(withId(R.id.title),
+                withText("Filtre par Salle"),
+                childAtPosition(childAtPosition(withId(R.id.content), 1), 0),
+                isDisplayed()));
+
+        appCompatTextView.perform(click());
+        //Create a ViewInteraction to click on the spinner
+        ViewInteraction appCompatSpinner = onView(Matchers.allOf(withId(R.id.spinner_choice),
+                childAtPosition(Matchers.allOf(withId(R.id.layout_spinner_filter),
+                        childAtPosition(withId(android.R.id.custom), 0)), 0),
+                isDisplayed()));
+
+        appCompatSpinner.perform(click());
+        //Click on the fourth position in the spinner list (salle 4)
+        onData(anything()).inRoot(RootMatchers.isPlatformPopup()).atPosition(2).perform(click());
+        //Create a ViewInteraction to click on the button to accept the filter choice
+        ViewInteraction appCompatButton = onView(Matchers.allOf(withId(android.R.id.button1), withText("Info"),
+                childAtPosition(childAtPosition(withClassName(is("android.widget.ScrollView")), 0),
+                        2)));
+        appCompatButton.perform(scrollTo(), click());
+        // then attent to show only the filtered list with1 element
+        onView(withId(R.id.rec)).check(RecyclerViewItemCountAssertion.withItemCount(1));
+    }
+
+    @Test
+    public void reunionList_clickOnFilterDate_thenAttentFilterList(){
+        onView(withId(R.id.rec)).check(matches(isDisplayed()));
+
+        //Create a ViewInteraction to click on the toolbar hamburger
+        ViewInteraction actionMenuItemView = onView(Matchers.allOf(withContentDescription("Info"),
+                childAtPosition(childAtPosition(withId(R.id.toolbar), 1), 0),
+                isDisplayed()));
+
+        actionMenuItemView.perform(click());
+        // Create a ViewInteraction to click on the item menu
+        ViewInteraction appCompatTextView = onView(Matchers.allOf(withId(R.id.title),
+                withText("Filtre par Date"),
+                childAtPosition(childAtPosition(withId(R.id.content), 1), 1),
+                isDisplayed()));
+
+        appCompatTextView.perform(click());
+        //Create a ViewInteraction to click on the spinner
+        ViewInteraction appCompatSpinner = onView(Matchers.allOf(withId(R.id.spinner_choice),
+                childAtPosition(Matchers.allOf(withId(R.id.layout_spinner_filter),
+                        childAtPosition(withId(android.R.id.custom), 0)), 0),
+                isDisplayed()));
+
+        appCompatSpinner.perform(click());
+        //Click on the first position in the spinner list (28/09/19)
+        onData(anything()).inRoot(RootMatchers.isPlatformPopup()).atPosition(0).perform(click());
+        //Create a ViewInteraction to click on the button to accept the filter choice
+        ViewInteraction appCompatButton = onView(Matchers.allOf(withId(android.R.id.button1), withText("Info"),
+                childAtPosition(childAtPosition(withClassName(is("android.widget.ScrollView")), 0),
+                        3)));
+        appCompatButton.perform(scrollTo(), click());
+        // then attent to show only the filtered list with 2 reunion
+        onView(withId(R.id.rec)).check(RecyclerViewItemCountAssertion.withItemCount(2));
+    }
+
 }
+
+
 
 

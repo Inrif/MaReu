@@ -15,8 +15,10 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.List;
 
 import abbesolo.com.maru.R;
+import abbesolo.com.maru.model.Room;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class FormActivity extends AppCompatActivity implements
@@ -32,6 +34,7 @@ public class FormActivity extends AppCompatActivity implements
     String[] roomNames = {"Salle 1", "Salle 2", "Salle 3", "Salle 4", "Salle 5", "Salle 6"};
     String selectedRoom;
     int selectedRoomPicture;
+    private List<Room>mRooms;
 
     int roomPicture[] = {R.drawable.re1, R.drawable.re2, R.drawable.re3, R.drawable.re4, R.drawable.re5, R.drawable.re6};
 
@@ -58,6 +61,10 @@ public class FormActivity extends AppCompatActivity implements
 
         CustomAdapter customAdapter = new CustomAdapter (getApplicationContext (), roomPicture, roomNames);
         meeting_room.setAdapter (customAdapter);
+
+//        RoomAdapter mRoomAdapter = new RoomAdapter ( this, 0, mRooms);
+//        meeting_room.setAdapter (mRoomAdapter);
+
 
         btnDatePicker.setOnClickListener (this);
         btnTimePicker.setOnClickListener (this);

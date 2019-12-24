@@ -107,7 +107,8 @@ public class ListMeetingActivity extends AppCompatActivity {
     }
 
     private void initListAdapter(List<Meeting> meetings) {
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(new MeetingAdapter (meetings, this));
+
     }
 
 
@@ -154,14 +155,17 @@ public class ListMeetingActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.filtre_by_date: {
-                configureAndShowAlertDialogDate();
-                return true;
-            }
+
             case R.id.filtre_by_place: {
                 configureAndShowAlertDialogPlace();
                 return true;
             }
+
+            case R.id.filtre_by_date: {
+                configureAndShowAlertDialogDate();
+                return true;
+            }
+
             case R.id.action_no_filter:{
                 initList ();
                 return true;
@@ -204,7 +208,6 @@ public class ListMeetingActivity extends AppCompatActivity {
 
 
     }
-
 
 
     private List<Meeting> configureAndShowAlertDialogDate(){
