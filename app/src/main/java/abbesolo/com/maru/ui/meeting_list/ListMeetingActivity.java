@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -78,7 +77,7 @@ public class ListMeetingActivity extends AppCompatActivity {
         setSupportActionBar (toolbar);
 
         initList ();
-      //  initListAdapter(List<Meeting> meetings);
+
 
         fab.setOnClickListener (new View.OnClickListener () {
             @Override
@@ -120,37 +119,6 @@ public class ListMeetingActivity extends AppCompatActivity {
         return true;
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId ();
-//
-//
-//        if (id == R.id.meeting_filtre ) {
-//
-//
-//            SortedList = mApiService.filterDate (FILT_BY_DATE);
-//
-//          // mFilteredList = mApiService.getFiltredMeetings(FILTER_BY_DATE);
-//            initList ();
-//          return true;
-//
-//
-//        }else {
-//
-//            SortedList = mApiService.filterRoom (FILT_BY_ROOM);
-//         //   mFilteredList = mApiService.getFiltredMeetings(FILTER_BY_PLACE);
-//            initList ();
-//
-//        }
-//
-//
-//        return super.onOptionsItemSelected (item);
-//
-//
-//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -198,7 +166,7 @@ public class ListMeetingActivity extends AppCompatActivity {
                 .setView(view)
                 .setPositiveButton("Filtrer",
                         (dialog, which) -> {
-                            ArrayList<Meeting> meetings = mApiService.filter (itemName);
+                            List<Meeting> meetings = mApiService.filter (itemName);
                            initListAdapter (meetings);
                         })
                 .setNegativeButton("Annuler",
@@ -235,7 +203,7 @@ public class ListMeetingActivity extends AppCompatActivity {
                 .setView(view)
                 .setPositiveButton("Filtrer",
                         (dialog, which) -> {
-                            ArrayList<Meeting> meetings = mApiService.filter(itemName);
+                           List<Meeting> meetings = mApiService.filter(itemName);
                             initListAdapter (meetings);
                         })
                 .setNegativeButton("Annuler",
@@ -244,9 +212,6 @@ public class ListMeetingActivity extends AppCompatActivity {
         builder.create().show();
        return mMeetings;
     }
-
-
-
 
 
 
@@ -265,13 +230,13 @@ public class ListMeetingActivity extends AppCompatActivity {
             String MeetingTime = data.getExtras ().getString ("MeetingTime");
             String MeetingMember = data.getExtras ().getString ("MeetingMember");
             String MeetingDate = data.getExtras ().getString ("MeetingDate");
-
-//            Log.e ("resultat", "MeetingMember: " + MeetingMember );
-            Log.e ("resultat", "MeetingRoom: " + MeetingRoom );
-//            Log.e ("resultat", "MeetingRoomPicture: " + MeetingRoomPicture );
-           Log.e ("resultat", "MeetingTime: " + MeetingTime );
-//            Log.e ("resultat", "MeetingTopic: " + MeetingTopic );
-            Log.e ("resultat", "MeetingDate: " + MeetingDate );
+//
+////            Log.e ("resultat", "MeetingMember: " + MeetingMember );
+//            Log.e ("resultat", "MeetingRoom: " + MeetingRoom );
+////            Log.e ("resultat", "MeetingRoomPicture: " + MeetingRoomPicture );
+//           Log.e ("resultat", "MeetingTime: " + MeetingTime );
+////            Log.e ("resultat", "MeetingTopic: " + MeetingTopic );
+//            Log.e ("resultat", "MeetingDate: " + MeetingDate );
 
             Room room = new Room (MeetingRoom, MeetingRoomPicture);
             List<Participant> participantList = new ArrayList<> ();

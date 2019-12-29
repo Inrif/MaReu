@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Ma Réu</string>
     <string name="action_settings">Settings</string>
+    <string name="cr_er_la_r_union">Créer la réunion</string>
+    <string name="filtrer_par_date">Filtrer par date</string>
+    <string name="filtrer_par_salle">Filtrer par salle</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
