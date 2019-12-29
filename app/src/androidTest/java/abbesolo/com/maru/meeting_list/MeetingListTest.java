@@ -114,16 +114,6 @@ public class MeetingListTest {
 
     }
 
-//    @Test
-//    public void myMeetingList_byDefaultIsSortedByDateOrRoom() {
-//        RecyclerView recyclerView = mActivityRule.getActivity ().findViewById (R.id.rec);
-//        TextView textView1 = recyclerView.getChildAt (0).findViewById (R.id.meeting);
-//        Assert.assertEquals (salles[0], textView1.getText ());
-//        TextView textView2 = recyclerView.getChildAt (1).findViewById (R.id.meeting);
-//        Assert.assertEquals (salles[1], textView2.getText ());
-//        TextView textView3 = recyclerView.getChildAt (2).findViewById (R.id.meeting);
-//        Assert.assertEquals (salles[2], textView3.getText ());
-//    }
 
     /**
      * When we delete an item, the item is no more shown
@@ -144,7 +134,7 @@ public class MeetingListTest {
      * check if the filter function in the menu filtered well and return good list
      */
     @Test
-    public void meetingList_clickOnFilter_thenAttentFilterList(){
+    public void meetingList_clickOnFilterSalle_thenAttentFilterList(){
         onView(withId(R.id.rec)).check(matches(isDisplayed()));
 
         //Create a ViewInteraction to click on the toolbar hamburger
@@ -178,9 +168,6 @@ public class MeetingListTest {
         // then attent to show only the filtered list with1 element
         onView(withId(R.id.rec)).check(RecyclerViewItemCountAssertion.withItemCount(1));
     }
-
-//    onView(allOf(withId(R.id.title),
-//    withText("Filtrer par salle"),
 
     @Test
     public void meetingList_clickOnFilterDate_thenAttentFilterList(){
