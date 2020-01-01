@@ -42,7 +42,6 @@ import static abbesolo.com.maru.ui.meeting_list.FilterDialog.initSpinnerDate;
 public class ListMeetingActivity extends AppCompatActivity {
 
     private List<Meeting> mMeetings;
-    private   List<Meeting> mFilteredList;
     private MeetingAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private int REQUEST_FOR_ACTIVITY_CODE = 100;
@@ -50,11 +49,6 @@ public class ListMeetingActivity extends AppCompatActivity {
     private   List<Meeting> SortedList;
     String itemName = "";
     private CustomAdapter mCustomAdapter;
-
-    public static final int FILTER_BY_DATE = 0, FILTER_BY_PLACE = 1;
-
-    private static final String FILT_BY_DATE ="MeetingDate", FILT_BY_ROOM ="MeetingRoom";
-
 
     // UI Components
     @BindView(R.id.toolbar)
@@ -73,11 +67,9 @@ public class ListMeetingActivity extends AppCompatActivity {
         mApiService = DI.getMeetingApiService ();
 
         ButterKnife.bind (this);
-
         setSupportActionBar (toolbar);
 
         initList ();
-
 
         fab.setOnClickListener (new View.OnClickListener () {
             @Override
@@ -96,13 +88,10 @@ public class ListMeetingActivity extends AppCompatActivity {
     private void initList() {
 
         mMeetings = mApiService.getMeetings ();
-    //mFilteredList = mApiService.getFiltredMeetings (int filter);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager (this);
         mAdapter = new MeetingAdapter (mMeetings, this);
         mRecyclerView.setLayoutManager (mLayoutManager);
         mRecyclerView.setAdapter (mAdapter);
-
-
     }
 
     private void initListAdapter(List<Meeting> meetings) {
@@ -110,15 +99,12 @@ public class ListMeetingActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater ().inflate (R.menu.menu_main, menu);
-
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -141,9 +127,6 @@ public class ListMeetingActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-
 
     private void configureAndShowAlertDialogPlace() {
 
@@ -176,7 +159,6 @@ public class ListMeetingActivity extends AppCompatActivity {
 
 
     }
-
 
     private List<Meeting> configureAndShowAlertDialogDate(){
         AlertDialog.Builder builder = new AlertDialog.Builder (this);
@@ -213,8 +195,6 @@ public class ListMeetingActivity extends AppCompatActivity {
        return mMeetings;
     }
 
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult (requestCode, resultCode, data);
@@ -227,16 +207,12 @@ public class ListMeetingActivity extends AppCompatActivity {
             String MeetingTopic = data.getExtras ().getString ("MeetingTopic");
             String MeetingRoom = data.getExtras ().getString ("MeetingRoom");
             int MeetingRoomPicture = data.getExtras ().getInt ("MeetingRoomPicture");
-            String MeetingTime = data.getExtras ().getString ("MeetingTime");
             String MeetingMember = data.getExtras ().getString ("MeetingMember");
             String MeetingDate = data.getExtras ().getString ("MeetingDate");
-//
-////            Log.e ("resultat", "MeetingMember: " + MeetingMember );
-//            Log.e ("resultat", "MeetingRoom: " + MeetingRoom );
-////            Log.e ("resultat", "MeetingRoomPicture: " + MeetingRoomPicture );
-//           Log.e ("resultat", "MeetingTime: " + MeetingTime );
-////            Log.e ("resultat", "MeetingTopic: " + MeetingTopic );
-//            Log.e ("resultat", "MeetingDate: " + MeetingDate );
+            String MeetingTime = data.getExtras ().getString ("MeetingTime");
+
+//            Log.e ("resultat", "MeetingMember: " + MeetingMember );
+//           Log.e ("resultat", "MeetingDate: " + MeetingDate );
 
             Room room = new Room (MeetingRoom, MeetingRoomPicture);
             List<Participant> participantList = new ArrayList<> ();
@@ -244,7 +220,7 @@ public class ListMeetingActivity extends AppCompatActivity {
             Participant participant = new Participant (1, MeetingMember);
             participantList.add (participant);
 
-            mMeetings.add (new Meeting (1, room, MeetingTime, MeetingTopic, participantList));
+            mMeetings.add (new Meeting (1, room, MeetingDate, MeetingTime, MeetingTopic, participantList));
 
             mAdapter.notifyDataSetChanged ();
         }

@@ -9,12 +9,18 @@ public class Meeting {
     private Room mMeetingRoom;
     private String mMeetingTime;
     private String mMeetingTopic;
+    private String mMeetingDate;
     private List<Participant> mMeetingParticipantList;
 
-    public Meeting(Integer id, Room meetingRoom, String meetingTime, String meetingTopic, List<Participant> meetingParticipant) {
+
+
+
+
+    public Meeting(Integer id, Room meetingRoom,String meetingDate, String meetingTime, String meetingTopic, List<Participant> meetingParticipant) {
         this.id = id;
         mMeetingRoom = meetingRoom;
         mMeetingTime = meetingTime;
+        mMeetingDate = meetingDate;
         mMeetingTopic = meetingTopic;
         mMeetingParticipantList = meetingParticipant;
 
@@ -37,6 +43,11 @@ public class Meeting {
         return mMeetingTopic;
     }
 
+    public String getMeetingDate() {
+        return mMeetingDate;
+    }
+
+
 
     public void setId(Integer id) {
         this.id = id;
@@ -53,6 +64,11 @@ public class Meeting {
     public void setMeetingTopic(String meetingTopic) {
         mMeetingTopic = meetingTopic;
     }
+
+    public void setMeetingDate(String meetingDate) {
+        mMeetingDate = meetingDate;
+    }
+
 
     public List<Participant> getMeetingParticipantList() {
         return mMeetingParticipantList;

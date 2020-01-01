@@ -36,9 +36,9 @@ public abstract class DummyMeetingGenerator {
 
 
     public static List<Meeting> DummyMeetings = Arrays.asList (
-            new Meeting (0, Rooms.get (0), "8-12-2019 9:30", "New App", Participants),
-            new Meeting (1, Rooms.get (1), "10-12-2019 10:30", "zo App", Participants),
-            new Meeting (2, Rooms.get (2), "11-12-2019 12:28", "New App", Participants)
+            new Meeting (0, Rooms.get (0), "8-12-2019", "9:30", "New App",Participants),
+            new Meeting (1, Rooms.get (1), "10-12-2019 ", "10:30","King App" ,Participants),
+            new Meeting (2, Rooms.get (2), "11-12-2019", "12:28", "New App",Participants)
     );
 
     static List<Meeting> generateMeetings() {

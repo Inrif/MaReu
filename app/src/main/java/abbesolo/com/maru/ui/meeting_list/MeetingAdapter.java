@@ -69,7 +69,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
 
         holder.mImageMeeting.setImageResource (meeting.getMeetingRoom ().getRes ());
 
-        holder.mMeeting.setText (meeting.getMeetingRoom ().getRoomName () + " - "
+        holder.mMeeting.setText (meeting.getMeetingRoom ().getRoomName () + " - " + meeting.getMeetingDate ()+ " - "
                 + meeting.getMeetingTime () + " - " + meeting.getMeetingTopic ());
 
         List<Participant> participants = meeting.getMeetingParticipantList ();
@@ -82,7 +82,6 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
 
         }
 
-
         holder.mparticipant.setText (memberList);
 
         holder.delebutton.setOnClickListener (new View.OnClickListener () {
@@ -91,8 +90,6 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
                 EventBus.getDefault ().post (new DeleteMeetingEvent (meeting));
             }
         });
-
-
     }
 
     @Override

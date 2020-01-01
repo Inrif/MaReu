@@ -55,7 +55,6 @@ public class MeetingListTest {
 
     // This is fixed
     private static int ITEMS_COUNT = 3;
-    private String[] salles = {"Salle 1 - 8-12-2019 9:30 - New App", "Salle 2 - 10-12-2019 10:30 - zo App", "Salle 7 - 11-12-2019 12:28 - New App"};
     private ListMeetingActivity mActivity;
     public static final String SALLE = "Salle I";
 
@@ -200,7 +199,7 @@ public class MeetingListTest {
                 childAtPosition(childAtPosition(withClassName(is("android.widget.ScrollView")), 0),
                         3)));
         appCompatButton.perform(scrollTo(), click());
-        // then attent to show only the filtered list with 2 reunion
+        // then attent to show only the filtered list with 1 reunion
         onView(withId(R.id.rec)).check(RecyclerViewItemCountAssertion.withItemCount(1));
     }
 

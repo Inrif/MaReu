@@ -42,7 +42,7 @@ public abstract class FilterDialog {
         List<String> arrayList = new ArrayList<>();
         Set<String> set = new HashSet<> ();
         for (Meeting m : meetings){
-            set.add(m.getMeetingTime ());
+            set.add(m.getMeetingDate ());
         }
         for (String s : set){
             arrayList.add(s);

@@ -11,8 +11,6 @@ public class DummyMeetingApiService implements MeetingApiService {
     private String mText;
 
 
-
-
     @Override
     public List<Meeting> getMeetings() {
         return meetings;
@@ -30,7 +28,7 @@ public class DummyMeetingApiService implements MeetingApiService {
         mText = text;
         ArrayList<Meeting> reunionSorted = new ArrayList<>();
         for (Meeting m : meetings) {
-            if (m.getMeetingRoom ().getRoomName ().equalsIgnoreCase(text) || m.getMeetingTime ().equals(text)){
+            if (m.getMeetingRoom ().getRoomName ().equalsIgnoreCase(text) || m.getMeetingDate ().equals(text)){
                 reunionSorted.add(m);
             }
         }
