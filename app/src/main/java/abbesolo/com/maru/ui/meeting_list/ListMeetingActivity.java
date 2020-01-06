@@ -17,14 +17,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import abbesolo.com.maru.R;
 import abbesolo.com.maru.di.DI;
 import abbesolo.com.maru.events.DeleteMeetingEvent;
 import abbesolo.com.maru.model.Meeting;
-import abbesolo.com.maru.model.Participant;
 import abbesolo.com.maru.model.Room;
 import abbesolo.com.maru.service.MeetingApiService;
 import androidx.annotation.Nullable;
@@ -46,7 +44,7 @@ public class ListMeetingActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private int REQUEST_FOR_ACTIVITY_CODE = 100;
     private MeetingApiService mApiService;
-    private   List<Meeting> SortedList;
+    private List<Meeting> SortedList;
     String itemName = "";
     private CustomAdapter mCustomAdapter;
 
@@ -95,7 +93,7 @@ public class ListMeetingActivity extends AppCompatActivity {
     }
 
     private void initListAdapter(List<Meeting> meetings) {
-        mRecyclerView.setAdapter(new MeetingAdapter (meetings, this));
+        mRecyclerView.setAdapter (new MeetingAdapter (meetings, this));
 
     }
 
@@ -108,24 +106,24 @@ public class ListMeetingActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId ()) {
 
             case R.id.filtre_by_place: {
-                configureAndShowAlertDialogPlace();
+                configureAndShowAlertDialogPlace ();
                 return true;
             }
 
             case R.id.filtre_by_date: {
-                configureAndShowAlertDialogDate();
+                configureAndShowAlertDialogDate ();
                 return true;
             }
 
-            case R.id.action_no_filter:{
+            case R.id.action_no_filter: {
                 initList ();
                 return true;
             }
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected (item);
     }
 
     private void configureAndShowAlertDialogPlace() {
@@ -133,66 +131,72 @@ public class ListMeetingActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder (this);
 
         View view = LayoutInflater.from (this).inflate (R.layout.filter_list_dialog, null);
-        Spinner spinner = view.findViewById(R.id.spinner_choice);
-       initRoomSpinner(view, spinner);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        Spinner spinner = view.findViewById (R.id.spinner_choice);
+        initRoomSpinner (view, spinner);
+        spinner.setOnItemSelectedListener (new AdapterView.OnItemSelectedListener () {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-               Room rom = (Room) spinner.getSelectedItem();
-                itemName = rom.getRoomName();
+                Room rom = (Room) spinner.getSelectedItem ();
+                itemName = rom.getRoomName ();
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
-        builder.setTitle("Sélectionnez une valeur")
-                .setView(view)
-                .setPositiveButton("Filtrer",
+        builder.setTitle ("Sélectionnez une valeur")
+                .setView (view)
+                .setPositiveButton ("Filtrer",
                         (dialog, which) -> {
                             List<Meeting> meetings = mApiService.filter (itemName);
-                           initListAdapter (meetings);
+                            initListAdapter (meetings);
                         })
-                .setNegativeButton("Annuler",
-                        (dialog, which) -> {});
+                .setNegativeButton ("Annuler",
+                        (dialog, which) -> {
+                        });
 
-        builder.create().show();
+        builder.create ().show ();
 
 
     }
 
-    private List<Meeting> configureAndShowAlertDialogDate(){
+    private List<Meeting> configureAndShowAlertDialogDate() {
         AlertDialog.Builder builder = new AlertDialog.Builder (this);
 
         View view = LayoutInflater.from (this).inflate (R.layout.filter_list_dialog, null);
 
-        List<String> arrayList= initSpinnerDate(mMeetings);
+        List<String> arrayList = initSpinnerDate (mMeetings);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, arrayList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, arrayList);
+        adapter.setDropDownViewResource (android.R.layout.simple_spinner_dropdown_item);
 
-        Spinner spinner = view.findViewById(R.id.spinner_choice);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()  {
+        Spinner spinner = view.findViewById (R.id.spinner_choice);
+        spinner.setAdapter (adapter);
+        spinner.setOnItemSelectedListener (new AdapterView.OnItemSelectedListener () {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                itemName = spinner.getSelectedItem().toString();
+                itemName = spinner.getSelectedItem ().toString ();
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
-        builder.setTitle("Sélectionnez une valeur")
-                .setView(view)
-                .setPositiveButton("Filtrer",
+        builder.setTitle ("Sélectionnez une valeur")
+                .setView (view)
+                .setPositiveButton ("Filtrer",
                         (dialog, which) -> {
-                           List<Meeting> meetings = mApiService.filter(itemName);
+                            List<Meeting> meetings = mApiService.filter (itemName);
                             initListAdapter (meetings);
                         })
-                .setNegativeButton("Annuler",
-                        (dialog, which) -> {});
+                .setNegativeButton ("Annuler",
+                        (dialog, which) -> {
+                        });
 
-        builder.create().show();
-       return mMeetings;
+        builder.create ().show ();
+        return mMeetings;
     }
 
     @Override
@@ -215,12 +219,8 @@ public class ListMeetingActivity extends AppCompatActivity {
 //           Log.e ("resultat", "MeetingDate: " + MeetingDate );
 
             Room room = new Room (MeetingRoom, MeetingRoomPicture);
-            List<Participant> participantList = new ArrayList<> ();
 
-            Participant participant = new Participant (1, MeetingMember);
-            participantList.add (participant);
-
-            mMeetings.add (new Meeting (1, room, MeetingDate, MeetingTime, MeetingTopic, participantList));
+            mMeetings.add (new Meeting (room, MeetingDate, MeetingTime, MeetingTopic, MeetingMember));
 
             mAdapter.notifyDataSetChanged ();
         }
@@ -228,14 +228,14 @@ public class ListMeetingActivity extends AppCompatActivity {
 
     @Override
     public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
+        super.onStart ();
+        EventBus.getDefault ().register (this);
     }
 
     @Override
     public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
+        super.onStop ();
+        EventBus.getDefault ().unregister (this);
     }
 
     @Subscribe
@@ -244,6 +244,25 @@ public class ListMeetingActivity extends AppCompatActivity {
         initList ();
 
     }
+
+//
+//    // function to split a list into two sublists in Java
+//    public static List[] split(List<Participant> participantList) {
+//        // create two empty lists
+//        List<Participant> first = new ArrayList<Participant> ();
+//        //   List<String> second = new ArrayList<String>();
+//
+//        // get size of the list
+//        int size = participantList.size ();
+//
+//        // First size)/2 element copy into list
+//        // first and rest second list
+//        for (int i = 0; i < size / 2; i++)
+//            first.add (participantList.get (i));
+//
+//        // return a List of array
+//        return new List[]{first};
+//    }
 
 
 }

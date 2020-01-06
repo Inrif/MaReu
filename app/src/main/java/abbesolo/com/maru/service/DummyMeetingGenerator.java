@@ -7,7 +7,6 @@ import java.util.List;
 
 import abbesolo.com.maru.R;
 import abbesolo.com.maru.model.Meeting;
-import abbesolo.com.maru.model.Participant;
 import abbesolo.com.maru.model.Room;
 
 public abstract class DummyMeetingGenerator {
@@ -26,19 +25,12 @@ public abstract class DummyMeetingGenerator {
     );
 
 
-    public static List<Participant> Participants = Arrays.asList (
-            new Participant (1,"romulus@yahoo.fr"),
-            new Participant (2,"romulus@yahoo.fr"),
-            new Participant (3,"romulus@yahoo.fr"),
-            new Participant (4,"romulus@yahoo.fr")
-
-    );
 
 
     public static List<Meeting> DummyMeetings = Arrays.asList (
-            new Meeting (0, Rooms.get (0), "8-12-2019", "9:30", "New App",Participants),
-            new Meeting (1, Rooms.get (1), "10-12-2019 ", "10:30","King App" ,Participants),
-            new Meeting (2, Rooms.get (2), "11-12-2019", "12:28", "New App",Participants)
+            new Meeting ( Rooms.get (0), "8-12-2019", "9:30", "New App","ro@yahoo.fr, to@gmail.com,go@yahoo.fr"),
+            new Meeting ( Rooms.get (1), "10-12-2019 ", "10:30","King App" ,"rid@yahoo.fr, fo@yahoo.fr, bo@yahoo.fr"),
+            new Meeting ( Rooms.get (2), "11-12-2019", "12:28", "New App","ro@yahoo.fr, to@gmail.com,go@yahoo.fr")
     );
 
     static List<Meeting> generateMeetings() {

@@ -15,7 +15,6 @@ import java.util.List;
 import abbesolo.com.maru.R;
 import abbesolo.com.maru.events.DeleteMeetingEvent;
 import abbesolo.com.maru.model.Meeting;
-import abbesolo.com.maru.model.Participant;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -72,17 +71,17 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         holder.mMeeting.setText (meeting.getMeetingRoom ().getRoomName () + " - " + meeting.getMeetingDate ()+ " - "
                 + meeting.getMeetingTime () + " - " + meeting.getMeetingTopic ());
 
-        List<Participant> participants = meeting.getMeetingParticipantList ();
+//        List<Participant> participants = meeting.getMeetingParticipantList ();
+//
+//        String memberList = "";
+//
+//        for (Participant member : participants) {
+//
+//            memberList = memberList + " " + member.getEmail () + ", ";
+//
+//        }
 
-        String memberList = "";
-
-        for (Participant member : participants) {
-
-            memberList = memberList + " " + member.getEmail () + ", ";
-
-        }
-
-        holder.mparticipant.setText (memberList);
+        holder.mparticipant.setText (meeting.getParticpant().toString ());
 
         holder.delebutton.setOnClickListener (new View.OnClickListener () {
             @Override

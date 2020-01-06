@@ -1,7 +1,5 @@
 package abbesolo.com.maru.model;
 
-import java.util.List;
-
 public class Meeting {
 
 
@@ -10,19 +8,19 @@ public class Meeting {
     private String mMeetingTime;
     private String mMeetingTopic;
     private String mMeetingDate;
-    private List<Participant> mMeetingParticipantList;
+    private String mParticpant;
 
 
 
 
 
-    public Meeting(Integer id, Room meetingRoom,String meetingDate, String meetingTime, String meetingTopic, List<Participant> meetingParticipant) {
-        this.id = id;
+    public Meeting( Room meetingRoom,String meetingDate, String meetingTime, String meetingTopic, String participant ) {
+
         mMeetingRoom = meetingRoom;
         mMeetingTime = meetingTime;
         mMeetingDate = meetingDate;
         mMeetingTopic = meetingTopic;
-        mMeetingParticipantList = meetingParticipant;
+        mParticpant = participant;
 
     }
 
@@ -45,6 +43,9 @@ public class Meeting {
 
     public String getMeetingDate() {
         return mMeetingDate;
+    }
+    public String getParticpant() {
+        return mParticpant;
     }
 
 
@@ -69,16 +70,9 @@ public class Meeting {
         mMeetingDate = meetingDate;
     }
 
-
-    public List<Participant> getMeetingParticipantList() {
-        return mMeetingParticipantList;
+    public void setParticpant(String particpant) {
+        mParticpant = particpant;
     }
-
-    public void setMeetingParticipantList(List<Participant> meetingParticipantList) {
-        mMeetingParticipantList = meetingParticipantList;
-    }
-
-
 
 
 
